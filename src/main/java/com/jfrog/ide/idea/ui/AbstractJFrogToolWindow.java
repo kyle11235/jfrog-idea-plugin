@@ -16,6 +16,8 @@ import com.intellij.util.ui.UIUtil;
 import com.jfrog.ide.idea.actions.CollapseAllAction;
 import com.jfrog.ide.idea.actions.ExpandAllAction;
 import com.jfrog.ide.idea.events.ApplicationEvents;
+import com.jfrog.ide.idea.log.Logger;
+import com.jfrog.ide.idea.ui.components.MyButton;
 import com.jfrog.ide.idea.ui.components.TitledPane;
 import com.jfrog.ide.idea.ui.filters.filtermenu.IssueFilterMenu;
 import com.jfrog.ide.idea.ui.filters.filtermenu.LicenseFilterMenu;
@@ -23,6 +25,7 @@ import com.jfrog.ide.idea.ui.filters.filtermenu.ScopeFilterMenu;
 import com.jfrog.ide.idea.ui.utils.ComponentUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jfrog.build.extractor.scan.DependencyTree;
+import org.jfrog.build.extractor.scan.GeneralInfo;
 import org.jfrog.build.extractor.scan.Issue;
 
 import javax.swing.*;
@@ -140,6 +143,14 @@ public abstract class AbstractJFrogToolWindow extends SimpleToolWindowPanel {
         componentsTree.addFilterMenu(scopeFilterMenu);
         toolbarPanel.add(scopeFilterMenu.getFilterButton());
 
+        // kyle
+        MyButton myButton = new MyButton("Request Whitelist");
+        myButton.init(this);
+        toolbarPanel.add(myButton);
+
+//        JLabel message = new JBLabel("");
+//        toolbarPanel.add(message);
+
         return toolbarPanel;
     }
 
@@ -196,7 +207,8 @@ public abstract class AbstractJFrogToolWindow extends SimpleToolWindowPanel {
      *
      * @return the selected nodes in the dependency tree
      */
-    List<DependencyTree> getSelectedNodes() {
+    // kyle: change to public
+    public List<DependencyTree> getSelectedNodes() {
         if (componentsTree.getModel() == null) {
             return Lists.newArrayList();
         }
@@ -230,10 +242,14 @@ public abstract class AbstractJFrogToolWindow extends SimpleToolWindowPanel {
 
         // Component selection listener
         componentsTree.addTreeSelectionListener(e -> {
+
+            // kyle: table
             updateIssuesTable();
             if (e == null || e.getNewLeadSelectionPath() == null) {
                 return;
             }
+
+            // kyle: details
             ComponentIssueDetails.createIssuesDetailsView(issuesDetailsPanel, (DependencyTree) e.getNewLeadSelectionPath().getLastPathComponent());
             // Scroll back to the beginning of the scrollable panel
             ApplicationManager.getApplication().invokeLater(() -> issuesDetailsScroll.getViewport().setViewPosition(new Point()));

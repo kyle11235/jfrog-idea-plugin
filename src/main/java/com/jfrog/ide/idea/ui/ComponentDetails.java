@@ -6,6 +6,8 @@ import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.components.panels.HorizontalLayout;
 import com.intellij.util.ui.UIUtil;
 import com.jfrog.ide.common.utils.Utils;
+import com.jfrog.ide.idea.ui.components.LinkButton;
+import com.jfrog.ide.idea.ui.components.MyButton;
 import com.jfrog.ide.idea.ui.utils.ComponentUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -43,6 +45,9 @@ public class ComponentDetails extends JPanel {
         addScopes(node.getScopes());
         addText("Path", generalInfo.getPath());
         addLicenses(node.getLicenses());
+
+        // kyle
+        // addRowUpload("Upload Component", "Input comment please", "Submit"); ;
     }
 
     private void addScopes(Set<Scope> scopes) {
@@ -93,6 +98,29 @@ public class ComponentDetails extends JPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.weightx = 0.9;
         add(ComponentUtils.createJTextArea(text, true), gridBagConstraints);
+    }
+
+    protected void addRowUpload(String header, String text, String txtButton) {
+        if (StringUtils.isBlank(text) || StringUtils.isBlank(txtButton)) {
+            return;
+        }
+        JLabel headerLabel = createHeaderLabel(header + ":");
+        GridBagConstraints gridBagConstraints = createGridBagConstraints();
+        GridBagConstraints buttonCon = createGridBagConstraints();
+
+        gridBagConstraints.gridy = lastTextPosition++;
+        buttonCon.gridy = gridBagConstraints.gridy;
+        add(headerLabel, gridBagConstraints);
+
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.weightx = 0.9;
+        add(ComponentUtils.createJTextAreaEditable(text, true), gridBagConstraints);
+
+        buttonCon.gridx = 2;
+        buttonCon.weightx = 0.9;
+        MyButton myButton = new MyButton(txtButton);
+        myButton.init(null);
+        add(myButton, buttonCon);
     }
 
     private JLabel createHeaderLabel(String title) {

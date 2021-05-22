@@ -31,6 +31,16 @@ public class ComponentUtils {
         return jTextArea;
     }
 
+    public static JTextArea createJTextAreaEditable(String text, boolean lineWrap) {
+        JTextArea jTextArea = new JTextArea(text);
+        jTextArea.setOpaque(true);
+        jTextArea.setEditable(true);
+        jTextArea.setLineWrap(lineWrap);
+        jTextArea.setWrapStyleWord(true);
+        jTextArea.setBackground(UIUtil.getTableBackground());
+        return jTextArea;
+    }
+
     public static JLabel createDisabledTextLabel(String text) {
         JLabel label = new JBLabel(text);
         label.setEnabled(false);
