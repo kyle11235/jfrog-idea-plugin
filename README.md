@@ -14,6 +14,9 @@ The zip file can be loaded into IntelliJ
 
 ```
 gradle clean build
+
+- kyle
+use gradle build in IDE (configured to use gradle 6.8 defined in gradle-wrapper.properties)
 ```
 
 # Developing the Plugin Code
