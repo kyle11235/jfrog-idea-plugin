@@ -52,9 +52,9 @@ public class MyButton extends JBLabel {
                 .setUrl(config.getArtifactoryUrl())
                 .setUsername(config.getUsername())
                 .setPassword(config.getPassword())
-                .addInterceptorLast((request, httpContext) -> {
-                    logger.info("Artifactory request: " + request.getRequestLine());
-                })
+//                .addInterceptorLast((request, httpContext) -> {
+//                    logger.info("Artifactory request: " + request.getRequestLine());
+//                })
                 .build();
 
         removeMouseListener(mouseListener);
